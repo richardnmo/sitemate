@@ -35,10 +35,17 @@ export class Database {
 
   async getIssues() {
     const issues = this.database.collection("issues");
-    if (issues !== null) {
-      return issues;
-    }
-    return null;
+    const requests = await issues.find().toArray();
+    // if (requests !== null) {
+    //   return requests;
+    // }
+    return [
+      {
+        id: "0",
+        name: "Sample",
+        desc: "Sample",
+      },
+    ];
   }
 
   /**

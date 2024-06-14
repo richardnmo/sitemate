@@ -14,7 +14,11 @@ app.use(express.json());
 export const database = new Database();
 
 app.get("/issues", async (req, res) => {
-  issues(database);
+  const resp = await issues(database);
+  if (resp !== null) {
+    res.status(200).send(resp);
+    return;
+  }
 });
 
 app.post("/issues", (req, res) => {

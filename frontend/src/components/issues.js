@@ -1,42 +1,83 @@
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+import * as React from "react";
+import Table from "react-bootstrap/Table";
+// import PerformanceRow from "./PerformanceRow";
 
-function NewIssue() {
-  const [validated, setValidated] = useState(false);
+// layer 1= overview: portfolio name
+// layer 2 = stocks: code,name, buyprice, current price, change %, units, value, pro/loss
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+const IssuesTable = ({ issues }) => {
+  const [selected, setSelected] = React.useState([]);
+  const isSelected = (name) => selected.indexOf(name) !== -1;
 
-    setValidated(true);
+  const handleClick = (event, name) => {
+    // const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+
+    // if (selectedIndex === -1) {
+    //   newSelected = newSelected.concat(selected, name);
+    // } else if (selectedIndex === 0) {
+    //   newSelected = newSelected.concat(selected.slice(1));
+    // } else if (selectedIndex === selected.length - 1) {
+    //   newSelected = newSelected.concat(selected.slice(0, -1));
+    // } else if (selectedIndex > 0) {
+    //   newSelected = newSelected.concat(
+    //     selected.slice(0, selectedIndex),
+    //     selected.slice(selectedIndex + 1)
+    //   );
+    // }
+    setSelected(newSelected);
   };
 
   return (
-    <Form noValidate validated={validated} onSubmit={handleSubmit}>
-      <Form.Group as={Col} md="4" controlId="issueName">
-        <Form.Label>Issue</Form.Label>
-        <Form.Control required type="text" placeholder="Issue name" />
-        {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
-        <Form.Control.Feedback type="invalid">
-          Please input a name.
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group as={Col} md="4" controlId="issueDesc">
-        <Form.Label>Description</Form.Label>
-        <Form.Control required type="text" placeholder="Issue description" />
-        {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
-        <Form.Control.Feedback type="invalid">
-          Please input a description for your issue.
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Button type="submit">Create Issue</Button>
-    </Form>
-  );
-}
+    <Table bordered hover>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Issue</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {this.issues.map((issue) => (
+          <tr key={issue.id}>
+            <td>{issue.id}</td>
+            <td>{issue.name}</td>
+            <td>{issue.desc}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
 
-export default NewIssue;
+    // <TableContainer component={Paper}>
+    //   <Table aria-label="collapsible table">
+    //     <TableHead>
+    //       <TableRow>
+    //         <TableCell />
+    //         <TableCell />
+    //         <TableCell align="left" style={{ fontWeight: "bold" }}>
+    //           Portfolio Name
+    //         </TableCell>
+    //       </TableRow>
+    //     </TableHead>
+    //     <TableBody>
+    //       {portfolios &&
+    //         portfolios.map((info) => {
+    //           const isItemSelected = isSelected(info.pid);
+    //           return (
+    //             <PerformanceRow
+    //               key={info.name}
+    //               pid={info.pid}
+    //               rowName={info.name}
+    //               stocks={info.stocks}
+    //               isItemSelected={isItemSelected}
+    //               handleClick={handleClick}
+    //             />
+    //           );
+    //         })}
+    //     </TableBody>
+    //   </Table>
+    // </TableContainer>
+  );
+};
+
+export default IssuesTable;

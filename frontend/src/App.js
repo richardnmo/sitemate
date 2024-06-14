@@ -1,16 +1,14 @@
 import API from "./api";
 import "./App.css";
 import NewIssue from "./components/newIssue";
+import Dashboard from "./pages/issues";
 
 function App() {
   const api = new API();
 
   return (
     <div>
-      <header>
-        <h1 align="center">Issues</h1>
-      </header>
-      <div align="center"></div>
+      <Dashboard />
     </div>
   );
 }
